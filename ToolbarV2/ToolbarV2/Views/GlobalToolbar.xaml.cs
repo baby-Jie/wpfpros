@@ -111,5 +111,9 @@ namespace ToolbarV2.Views
 
         #endregion EventHandlers
 
+        private void StopLessonBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarV2", "ToolbarV2\Tool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfResources", "WpfResources\WpfResources.csproj", "{8FD5EE53-A755-40E0-837D-315B4460CF63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarV1", "ToolbarV1\ToolbarV1.csproj", "{9B4396AA-160F-4274-8B18-36641AF5D93D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

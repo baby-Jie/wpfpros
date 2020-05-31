@@ -262,7 +262,6 @@
                                                               Width="40"
                                                               Height="40"
                                                               Margin="5 0"
-                                                              Checked="EraserRadioButton_OnChecked"
                                                               IsChecked="True"
                                                               Content="SlimEraser">
                                 <localControl:GeometryRadioButton.Template>
@@ -299,7 +298,6 @@
                             </localControl:GeometryRadioButton>
 
                             <localControl:GeometryRadioButton x:Name="ThickEraserRadioBtn"
-                                                              Checked="EraserRadioButton_OnChecked"
                                                               Width="40"
                                                               Height="40"
                                                               Margin="5 0"
@@ -347,7 +345,6 @@
                                                      Width="40"
                                                      Height="40"
                                                      MainGeometry="{StaticResource ZKCleanGeometry}"
-                                                     Click="ClearAllButton_OnClick"
                                                      Margin="0 0">
                             </localControl:MenuButton>
 
@@ -364,7 +361,6 @@
                                                      Margin="0 0 0 0"
                                                      IsMirror="False"
                                                      MainRotateAngle="0"
-                                                     Click="UndoButton_OnClick"
                                                      MainGeometry="{StaticResource ZKCancelGeometry}"
                                                      Content="撤销">
                             </localControl:MenuButton>
@@ -375,7 +371,6 @@
 
             <!--更多弹窗-->
             <Popup x:Name="MoreMenuPopUp"
-                   Opened="PopUp_Opened"
                    AllowsTransparency="True"
                    PlacementTarget="{Binding ElementName=MoreMenuButton}"
                    Placement="Top"
@@ -402,25 +397,21 @@
 
                         <localControl:MenuButton x:Name="DesktopBtn"
                                                  MainGeometry="{StaticResource GlobalMenuDesktopGeometry}"
-                                                 Click="DeskTopButton_OnClick"
                                                  Content="桌面">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="ResourceBtn"
                                                  MainGeometry="{StaticResource GlobalFoldGeometry}"
-                                                 Click="ResourceButton_OnClick"
                                                  Content="资源">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="AboutBtn"
                                                  MainIconRadiux="24"
-                                                 Click="AboutButton_OnClick"
                                                  MainGeometry="{StaticResource AboutGeometry}"
                                                  Content="关于">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="QuitBtn"
-                                                 Click="QuitButton_OnClick"
                                                  MainGeometry="{StaticResource GlobalMenuQuitGeometry}"
                                                  Content="退出">
                         </localControl:MenuButton>
@@ -430,7 +421,6 @@
 
             <!--更多弹窗-->
             <Popup x:Name="MoreMenuPopUp2"
-                   Opened="PopUp_Opened"
                    AllowsTransparency="True"
                    PlacementTarget="{Binding ElementName=MoreMenuButton}"
                    Placement="Top"
@@ -466,25 +456,21 @@
                                         Margin="0 10">
                                 <localControl:MenuButton x:Name="DesktopBtn1"
                                                          MainGeometry="{StaticResource ZKWindowsGeometry}"
-                                                         Click="DeskTopButton_OnClick"
                                                          Content="桌面">
                                 </localControl:MenuButton>
 
                                 <localControl:MenuButton x:Name="BookBtn"
                                                          MainGeometry="{StaticResource ZKTextBookGeometry}"
-                                                         Click="BookButton_OnClick"
                                                          Content="课本">
                                 </localControl:MenuButton>
 
                                 <localControl:MenuButton x:Name="ResourceBtn1"
                                                          MainGeometry="{StaticResource ZKResourceGeometry}"
-                                                         Click="ResourceButton_OnClick"
                                                          Content="资源">
                                 </localControl:MenuButton>
 
                                 <localControl:MenuButton x:Name="MicroRecordBtn"
                                                          MainGeometry="{StaticResource ZKMicroLessonGeometry}"
-                                                         Click="RecordedLessonsButton_OnClick"
                                                          Content="已录微课">
                                 </localControl:MenuButton>
                             </StackPanel>
@@ -502,13 +488,11 @@
                                         Margin="0 10">
                                 <localControl:MenuButton x:Name="PreparePackageBtn"
                                                          MainGeometry="{StaticResource ZKPreparePackageGeometry}"
-                                                         Click="LessonPackageButton_OnClick"
                                                          Content="备课包">
                                 </localControl:MenuButton>
 
                                 <localControl:MenuButton x:Name="PrepareBookBtn"
                                                          MainGeometry="{StaticResource ZKSwitchBookGeometry}"
-                                                         Click="LessonBookButton_OnClick"
                                                          Content="备课本">
                                 </localControl:MenuButton>
 
@@ -557,14 +541,12 @@
                                                  MainIconRadiux="20"
                                                  CornerPosition="0"
                                                  MainGeometry="{StaticResource ZKSelectGeometry}"
-                                                 Content="选择"
-                                                 Click="SelectButton_OnClick">
+                                                 Content="选择">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="PenBtn"
                                                  MainIconRadiux="20"
                                                  HasSubMenu="True"
-                                                 Click="PenButton_OnClick"
                                                  MainGeometry="{StaticResource ZKPenGeometry}"
                                                  Content="粉笔">
                         </localControl:MenuButton>
@@ -572,7 +554,6 @@
                         <localControl:MenuButton x:Name="EraserBtn"
                                                  MainIconRadiux="20"
                                                  HasSubMenu="True"
-                                                 Click="EraserButton_OnClick"
                                                  MainGeometry="{StaticResource ZKEraseGeometry}"
                                                  Content="橡皮">
                         </localControl:MenuButton>
@@ -580,26 +561,22 @@
                         <localControl:MenuButton x:Name="WhiteBoardCollapsedBtn"
                                                  Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                  MainGeometry="{StaticResource ZKCollapseGeometry}"
-                                                 Click="WhiteBoardCollapsedBtn_OnClick"
                                                  Content="收起">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="WhiteBoardBtn"
                                                  Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BoolToVisibilityOppositeConverter}}"
                                                  MainGeometry="{StaticResource ZKWhiteBoardGeometry}"
-                                                 Click="WhiteBoardButton_Click"
                                                  Content="白板">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="FocusBtn"
-                                                 Click="FocusButton_OnClick"
                                                  MainGeometry="{StaticResource ZKFocusGeometry}"
                                                  Content="聚焦">
                         </localControl:MenuButton>
 
                         <Grid>
                             <localControl:MenuButton x:Name="RecordBtn"
-                                                     Click="RecordButton_OnClick"
                                                      MainGeometry="{StaticResource ZKRecordGeometry}"
                                                      Content="录课">
                             </localControl:MenuButton>
@@ -637,14 +614,13 @@
                         <localControl:MenuButton x:Name="InteractionBtn"
                                                  Visibility="{Binding IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                  MainGeometry="{StaticResource ZKInteractionGeometry}"
-                                                 Click="InteractionButton_OnClick"
                                                  Content="互动">
                         </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="StopLessonBtn"
                                                  Visibility="{Binding Path=IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                  MainGeometry="{StaticResource ZKStopLessonGeometry}"
-                                                 Click="QuitButton_OnClick"
+                                                 Click="StopLessonBtn_OnClick"
                                                  Content="下课">
                         </localControl:MenuButton>
 
