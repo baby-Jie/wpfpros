@@ -57,15 +57,19 @@
                         <Grid>
                             <StackPanel Margin="5">
                                 <localControl:GeometryRadioButton x:Name="PenWidthSlimRadioBtn"
-                                                                  MainGeometry="{StaticResource GlobalPenSlimWidthGeometry}">
+                                                                  IsChecked="True"
+                                                                  MainGeometry="{StaticResource GlobalPenSlimWidthGeometry}"
+                                                                  Checked="PenWidthRadioBtn_OnChecked">
                                 </localControl:GeometryRadioButton>
 
                                 <localControl:GeometryRadioButton x:Name="PenWidthMiddleRadioBtn"
-                                                                  MainGeometry="{StaticResource GlobalPenMiddleWidthGeometry}">
+                                                                  MainGeometry="{StaticResource GlobalPenMiddleWidthGeometry}"
+                                                                  Checked="PenWidthRadioBtn_OnChecked">
                                 </localControl:GeometryRadioButton>
 
                                 <localControl:GeometryRadioButton x:Name="PenWidthThickRadioBtn"
-                                                                  MainGeometry="{StaticResource GlobalPenThickWidthGeometry}">
+                                                                  MainGeometry="{StaticResource GlobalPenThickWidthGeometry}"
+                                                                  Checked="PenWidthRadioBtn_OnChecked">
                                 </localControl:GeometryRadioButton>
                             </StackPanel>
                         </Grid>
@@ -259,6 +263,7 @@
                             </StackPanel.Resources>
 
                             <localControl:GeometryRadioButton x:Name="SlimEraserRadioBtn"
+                                                              Visibility="Collapsed"
                                                               Width="40"
                                                               Height="40"
                                                               Margin="5 0"
@@ -300,6 +305,7 @@
                             <localControl:GeometryRadioButton x:Name="ThickEraserRadioBtn"
                                                               Width="40"
                                                               Height="40"
+                                                              Visibility="Collapsed"
                                                               Margin="5 0"
                                                               Content="ThickEraser">
                                 <localControl:GeometryRadioButton.Template>
@@ -345,6 +351,7 @@
                                                      Width="40"
                                                      Height="40"
                                                      MainGeometry="{StaticResource ZKCleanGeometry}"
+                                                     Click="EraserAllBtn_OnClick"
                                                      Margin="0 0">
                             </localControl:MenuButton>
 
@@ -540,6 +547,7 @@
                                                  IsCorner="True"
                                                  MainIconRadiux="20"
                                                  CornerPosition="0"
+                                                 Click="SelectBtn_OnClick"
                                                  MainGeometry="{StaticResource ZKSelectGeometry}"
                                                  Content="选择">
                         </localControl:MenuButton>
@@ -548,6 +556,7 @@
                                                  MainIconRadiux="20"
                                                  HasSubMenu="True"
                                                  MainGeometry="{StaticResource ZKPenGeometry}"
+                                                 Click="PenBtn_OnClick"
                                                  Content="粉笔">
                         </localControl:MenuButton>
 
@@ -555,6 +564,7 @@
                                                  MainIconRadiux="20"
                                                  HasSubMenu="True"
                                                  MainGeometry="{StaticResource ZKEraseGeometry}"
+                                                 Click="EraserBtn_OnClick"
                                                  Content="橡皮">
                         </localControl:MenuButton>
 
@@ -564,11 +574,11 @@
                                                  Content="收起">
                         </localControl:MenuButton>
 
-                        <localControl:MenuButton x:Name="WhiteBoardBtn"
+                        <!--<localControl:MenuButton x:Name="WhiteBoardBtn"
                                                  Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BoolToVisibilityOppositeConverter}}"
                                                  MainGeometry="{StaticResource ZKWhiteBoardGeometry}"
                                                  Content="白板">
-                        </localControl:MenuButton>
+                        </localControl:MenuButton>-->
 
                         <localControl:MenuButton x:Name="FocusBtn"
                                                  MainGeometry="{StaticResource ZKFocusGeometry}"
@@ -610,12 +620,6 @@
                                 </Ellipse.Style>
                             </Ellipse>
                         </Grid>
-
-                        <localControl:MenuButton x:Name="InteractionBtn"
-                                                 Visibility="{Binding IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                 MainGeometry="{StaticResource ZKInteractionGeometry}"
-                                                 Content="互动">
-                        </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="StopLessonBtn"
                                                  Visibility="{Binding Path=IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"

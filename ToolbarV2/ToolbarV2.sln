@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfResources", "WpfResource
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarV1", "ToolbarV1\ToolbarV1.csproj", "{9B4396AA-160F-4274-8B18-36641AF5D93D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PainingBoard", "PainingBoard\PainingBoard.csproj", "{C2F71188-BC31-4DBF-9154-1D04E8C653AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B4396AA-160F-4274-8B18-36641AF5D93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F71188-BC31-4DBF-9154-1D04E8C653AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F71188-BC31-4DBF-9154-1D04E8C653AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F71188-BC31-4DBF-9154-1D04E8C653AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F71188-BC31-4DBF-9154-1D04E8C653AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
