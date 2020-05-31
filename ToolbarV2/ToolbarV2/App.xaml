@@ -1,0 +1,22 @@
+﻿<Application x:Class="ToolbarV2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ToolbarV2"
+             xmlns:converters="clr-namespace:WpfResources.Converters;assembly=WpfResources"
+             StartupUri="/Views/GlobalToolbar.xaml">
+    <Application.Resources>
+         <ResourceDictionary>
+
+             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+
+             <converters:CenterToolTipConverter x:Key="CenterToolTipConverter"></converters:CenterToolTipConverter>
+
+             <converters:BoolToVisibilityOppositeConverter x:Key="BoolToVisibilityOppositeConverter"></converters:BoolToVisibilityOppositeConverter>
+
+            <ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="/WpfResources;component/Themes/Generic.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/ToolbarV2;component/Themes/MainResource1.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

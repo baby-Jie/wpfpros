@@ -1,0 +1,676 @@
+﻿<Window x:Class="ToolbarV2.Views.GlobalToolbar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToolbarV2.Views"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Topmost="True"
+        Background="{x:Null}"
+        xmlns:viewModels="clr-namespace:ToolbarV2.ViewModels"
+        xmlns:localControl="clr-namespace:ToolbarV2.Controls"
+        mc:Ignorable="d"
+        Title="GlobalToolbar"
+        SizeToContent="WidthAndHeight">
+
+    <Window.DataContext>
+        <viewModels:GlobalToolbarViewModel></viewModels:GlobalToolbarViewModel>
+    </Window.DataContext>
+
+    <Grid x:Name="MainGrid">
+
+        <Grid x:Name="PopUpContainer"
+              Visibility="Visible">
+
+            <!--画笔弹窗-->
+            <Popup x:Name="PenSettingPopUp"
+                   StaysOpen="False"
+                   IsOpen="{Binding IsPenSettingPopOpen}"
+                   PlacementTarget="{Binding ElementName=PenBtn}"
+                   Placement="Top"
+                   VerticalOffset="-40"
+                   AllowsTransparency="True">
+
+                <Popup.HorizontalOffset>
+                    <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                        <Binding Path="PlacementTarget.ActualWidth"
+                                 RelativeSource="{RelativeSource Self}"></Binding>
+                        <Binding Path="ActualWidth"
+                                 ElementName="PenSettingContainer"></Binding>
+                    </MultiBinding>
+                </Popup.HorizontalOffset>
+
+                <Border x:Name="PenSettingContainer"
+                        CornerRadius="10"
+                        BorderThickness="0"
+                        BorderBrush="{StaticResource MainBorderBrush}"
+                        Background="{StaticResource GlobalMainBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid>
+                            <StackPanel Margin="5">
+                                <localControl:GeometryRadioButton x:Name="PenWidthSlimRadioBtn"
+                                                                  MainGeometry="{StaticResource GlobalPenSlimWidthGeometry}">
+                                </localControl:GeometryRadioButton>
+
+                                <localControl:GeometryRadioButton x:Name="PenWidthMiddleRadioBtn"
+                                                                  MainGeometry="{StaticResource GlobalPenMiddleWidthGeometry}">
+                                </localControl:GeometryRadioButton>
+
+                                <localControl:GeometryRadioButton x:Name="PenWidthThickRadioBtn"
+                                                                  MainGeometry="{StaticResource GlobalPenThickWidthGeometry}">
+                                </localControl:GeometryRadioButton>
+                            </StackPanel>
+                        </Grid>
+
+                        <Rectangle  StrokeThickness="1"
+                                    Fill="{StaticResource SplitFillBrush}"
+                                    Width="1pt"
+                                    Grid.Column="1"
+                                    Margin="0 20" />
+
+                        <Grid Grid.Column="2">
+                            <ListBox x:Name="PenColorListBox"
+                                     Margin="5"
+                                     Padding="0"
+                                     SelectedItem="{Binding SelectedPenColorModel}"
+                                     ItemsSource="{Binding PenColorModelList}"
+                                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox">
+                                        <Setter Property="BorderThickness"
+                                                Value="0" />
+
+                                        <Setter Property="Background"
+                                                Value="Transparent" />
+
+                                        <Setter Property="ItemsPanel">
+                                            <Setter.Value>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal"
+                                                               Width="120"
+                                                               Margin="0"
+                                                               x:Name="MyTestPanel" />
+                                                </ItemsPanelTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Setter Property="ItemContainerStyle">
+                                            <Setter.Value>
+                                                <Style TargetType="ListBoxItem">
+                                                    <Setter Property="Width"
+                                                            Value="50" />
+
+                                                    <Setter Property="Height"
+                                                            Value="50" />
+
+                                                    <Setter Property="Margin"
+                                                            Value="5" />
+
+                                                    <Setter Property="Padding"
+                                                            Value="0" />
+
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListBoxItem">
+                                                                <Border>
+                                                                    <Grid>
+                                                                        <ContentPresenter></ContentPresenter>
+                                                                    </Grid>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Setter Property="ItemTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <Border Background="#01000000"
+                                                            CornerRadius="4"
+                                                            Margin="0"
+                                                            x:Name="OuterBorderContainer">
+                                                        <Grid>
+                                                            <Border CornerRadius="2"
+                                                                    Width="30"
+                                                                    Height="30"
+                                                                    Background="{Binding Path=PenColorString}">
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <DataTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                     Value="True">
+                                                            <Setter Property="Background"
+                                                                    TargetName="OuterBorderContainer"
+                                                                    Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                                        </DataTrigger>
+
+                                                        <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                     Value="True">
+                                                            <Setter Property="Background"
+                                                                    TargetName="OuterBorderContainer"
+                                                                    Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                                        </DataTrigger>
+                                                    </DataTemplate.Triggers>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.Style>
+
+                            </ListBox>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Popup>
+
+            <!--橡皮擦弹窗-->
+            <Popup x:Name="EraserSettingPopUp"
+                   StaysOpen="False"
+                   IsOpen="{Binding IsEraserSettingPopOpen}"
+                   PlacementTarget="{Binding ElementName=EraserBtn}"
+                   Placement="Top"
+                   VerticalOffset="-40"
+                   AllowsTransparency="True">
+
+                <Popup.HorizontalOffset>
+                    <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                        <Binding Path="PlacementTarget.ActualWidth"
+                                 RelativeSource="{RelativeSource Self}"></Binding>
+                        <Binding Path="ActualWidth"
+                                 ElementName="EraserSettingPopContainer"></Binding>
+                    </MultiBinding>
+                </Popup.HorizontalOffset>
+
+                <Border x:Name="EraserSettingPopContainer"
+                        CornerRadius="10"
+                        Background="{StaticResource GlobalMainBackgroundBrush}">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="5 10 10 10">
+
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type localControl:MenuButton}">
+
+                                    <Setter Property="Background"
+                                            Value="#01ffffff" />
+
+                                    <Setter Property="Foreground"
+                                            Value="{StaticResource MenuButtonNormalForegroundBrush}" />
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type localControl:MenuButton}">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        Padding="{TemplateBinding Margin}"
+                                                        CornerRadius="4">
+                                                    <Grid>
+                                                        <Path Stretch="Uniform"
+                                                              x:Name="MainIconPath"
+                                                              Width="22"
+                                                              Height="22"
+                                                              RenderTransformOrigin=".5 .5"
+                                                              Fill="{TemplateBinding Foreground}"
+                                                              Data="{TemplateBinding MainGeometry}">
+                                                            <Path.RenderTransform>
+                                                                <TransformGroup>
+                                                                    <ScaleTransform />
+                                                                    <SkewTransform />
+                                                                    <RotateTransform Angle="{Binding RelativeSource={RelativeSource TemplatedParent} , Path=MainRotateAngle}" />
+                                                                    <TranslateTransform />
+                                                                </TransformGroup>
+                                                            </Path.RenderTransform>
+                                                        </Path>
+                                                    </Grid>
+                                                </Border>
+
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver"
+                                                             Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                                    </Trigger>
+
+                                                    <Trigger Property="IsMirror"
+                                                             Value="True">
+                                                        <Setter Property="FlowDirection"
+                                                                Value="RightToLeft"
+                                                                TargetName="MainIconPath">
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </StackPanel.Resources>
+
+                            <localControl:GeometryRadioButton x:Name="SlimEraserRadioBtn"
+                                                              Width="40"
+                                                              Height="40"
+                                                              Margin="5 0"
+                                                              Checked="EraserRadioButton_OnChecked"
+                                                              IsChecked="True"
+                                                              Content="SlimEraser">
+                                <localControl:GeometryRadioButton.Template>
+                                    <ControlTemplate TargetType="{x:Type localControl:GeometryRadioButton}">
+                                        <Border x:Name="PartBorder"
+                                                CornerRadius="4"
+                                                Background="#01000000">
+                                            <Grid>
+                                                <Ellipse Stretch="Uniform"
+                                                         Width="16"
+                                                         Height="16"
+                                                         Fill="{StaticResource MenuButtonNormalForegroundBrush}">
+
+                                                </Ellipse>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        TargetName="PartBorder"
+                                                        Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsChecked"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        TargetName="PartBorder"
+                                                        Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </localControl:GeometryRadioButton.Template>
+                            </localControl:GeometryRadioButton>
+
+                            <localControl:GeometryRadioButton x:Name="ThickEraserRadioBtn"
+                                                              Checked="EraserRadioButton_OnChecked"
+                                                              Width="40"
+                                                              Height="40"
+                                                              Margin="5 0"
+                                                              Content="ThickEraser">
+                                <localControl:GeometryRadioButton.Template>
+                                    <ControlTemplate TargetType="{x:Type localControl:GeometryRadioButton}">
+                                        <Border x:Name="PartBorder"
+                                                Background="#01000000">
+                                            <Grid>
+                                                <Ellipse Stretch="Uniform"
+                                                         Width="20"
+                                                         Height="20"
+                                                         Fill="{StaticResource MenuButtonNormalForegroundBrush}">
+
+                                                </Ellipse>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        TargetName="PartBorder"
+                                                        Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsChecked"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        TargetName="PartBorder"
+                                                        Value="{StaticResource SettingButtonSelectedBackgroundBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </localControl:GeometryRadioButton.Template>
+                            </localControl:GeometryRadioButton>
+
+                            <Rectangle Fill="{StaticResource SplitFillBrush}"
+                                       Width="1"
+                                       Height="30"
+                                       Margin="2 0 7 0">
+
+                            </Rectangle>
+
+                            <localControl:MenuButton x:Name="EraserAllBtn"
+                                                     Width="40"
+                                                     Height="40"
+                                                     MainGeometry="{StaticResource ZKCleanGeometry}"
+                                                     Click="ClearAllButton_OnClick"
+                                                     Margin="0 0">
+                            </localControl:MenuButton>
+
+                            <Rectangle Fill="{StaticResource SplitFillBrush}"
+                                       Width="1"
+                                       Height="30"
+                                       Margin="7 0">
+
+                            </Rectangle>
+
+                            <localControl:MenuButton x:Name="UndoBtn"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="0 0 0 0"
+                                                     IsMirror="False"
+                                                     MainRotateAngle="0"
+                                                     Click="UndoButton_OnClick"
+                                                     MainGeometry="{StaticResource ZKCancelGeometry}"
+                                                     Content="撤销">
+                            </localControl:MenuButton>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Popup>
+
+            <!--更多弹窗-->
+            <Popup x:Name="MoreMenuPopUp"
+                   Opened="PopUp_Opened"
+                   AllowsTransparency="True"
+                   PlacementTarget="{Binding ElementName=MoreMenuButton}"
+                   Placement="Top"
+                   VerticalOffset="{StaticResource GlobalPopVerticalOffset}"
+                   StaysOpen="False">
+
+                <Popup.HorizontalOffset>
+                    <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                        <Binding Path="PlacementTarget.ActualWidth"
+                                 RelativeSource="{RelativeSource Self}"></Binding>
+                        <Binding Path="ActualWidth"
+                                 ElementName="MoreMenuContainer"></Binding>
+                    </MultiBinding>
+                </Popup.HorizontalOffset>
+
+                <Border x:Name="MoreMenuContainer"
+                        Height="{StaticResource GlobalMenuHeightKey}"
+                        CornerRadius="10"
+                        BorderThickness="0"
+                        BorderBrush="{StaticResource MainBorderBrush}"
+                        Background="{StaticResource GlobalMainBackgroundBrush}">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <localControl:MenuButton x:Name="DesktopBtn"
+                                                 MainGeometry="{StaticResource GlobalMenuDesktopGeometry}"
+                                                 Click="DeskTopButton_OnClick"
+                                                 Content="桌面">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="ResourceBtn"
+                                                 MainGeometry="{StaticResource GlobalFoldGeometry}"
+                                                 Click="ResourceButton_OnClick"
+                                                 Content="资源">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="AboutBtn"
+                                                 MainIconRadiux="24"
+                                                 Click="AboutButton_OnClick"
+                                                 MainGeometry="{StaticResource AboutGeometry}"
+                                                 Content="关于">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="QuitBtn"
+                                                 Click="QuitButton_OnClick"
+                                                 MainGeometry="{StaticResource GlobalMenuQuitGeometry}"
+                                                 Content="退出">
+                        </localControl:MenuButton>
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <!--更多弹窗-->
+            <Popup x:Name="MoreMenuPopUp2"
+                   Opened="PopUp_Opened"
+                   AllowsTransparency="True"
+                   PlacementTarget="{Binding ElementName=MoreMenuButton}"
+                   Placement="Top"
+                   VerticalOffset="{StaticResource GlobalPopVerticalOffset}"
+                   StaysOpen="False"
+                   IsOpen="{Binding IsExpandSubMenu}">
+
+                <Popup.HorizontalOffset>
+                    <MultiBinding Converter="{StaticResource CenterToolTipConverter}">
+                        <Binding Path="PlacementTarget.ActualWidth"
+                                 RelativeSource="{RelativeSource Self}"></Binding>
+                        <Binding Path="ActualWidth"
+                                 ElementName="MoreMenuContainer1"></Binding>
+                    </MultiBinding>
+                </Popup.HorizontalOffset>
+
+                <Border x:Name="MoreMenuContainer1"
+                        CornerRadius="6"
+                        BorderThickness="0"
+                        BorderBrush="{StaticResource MainBorderBrush}"
+                        Background="{StaticResource GlobalMainBackgroundBrush}">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--第一行-->
+                        <Grid>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0 10">
+                                <localControl:MenuButton x:Name="DesktopBtn1"
+                                                         MainGeometry="{StaticResource ZKWindowsGeometry}"
+                                                         Click="DeskTopButton_OnClick"
+                                                         Content="桌面">
+                                </localControl:MenuButton>
+
+                                <localControl:MenuButton x:Name="BookBtn"
+                                                         MainGeometry="{StaticResource ZKTextBookGeometry}"
+                                                         Click="BookButton_OnClick"
+                                                         Content="课本">
+                                </localControl:MenuButton>
+
+                                <localControl:MenuButton x:Name="ResourceBtn1"
+                                                         MainGeometry="{StaticResource ZKResourceGeometry}"
+                                                         Click="ResourceButton_OnClick"
+                                                         Content="资源">
+                                </localControl:MenuButton>
+
+                                <localControl:MenuButton x:Name="MicroRecordBtn"
+                                                         MainGeometry="{StaticResource ZKMicroLessonGeometry}"
+                                                         Click="RecordedLessonsButton_OnClick"
+                                                         Content="已录微课">
+                                </localControl:MenuButton>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--第二行-->
+                        <Rectangle Grid.Row="1"
+                                   Fill="{StaticResource SplitFillBrush}"
+                                   Height="1"
+                                   Margin="15 0" />
+
+                        <!--第三行-->
+                        <Grid Grid.Row="2">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0 10">
+                                <localControl:MenuButton x:Name="PreparePackageBtn"
+                                                         MainGeometry="{StaticResource ZKPreparePackageGeometry}"
+                                                         Click="LessonPackageButton_OnClick"
+                                                         Content="备课包">
+                                </localControl:MenuButton>
+
+                                <localControl:MenuButton x:Name="PrepareBookBtn"
+                                                         MainGeometry="{StaticResource ZKSwitchBookGeometry}"
+                                                         Click="LessonBookButton_OnClick"
+                                                         Content="备课本">
+                                </localControl:MenuButton>
+
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                </Border>
+
+            </Popup>
+        </Grid>
+
+        <Grid x:Name="ContentGrid">
+
+            <DockPanel>
+                <Grid x:Name="CollapsedContainer"
+                      DockPanel.Dock="Top">
+                    <localControl:GlobalCollapsedButton x:Name="CollapsedButton"
+                                                        Width="160"
+                                                        Height="30"
+                                                        SnapsToDevicePixels="True"
+                                                        Margin="0 0 0 0"
+                                                        IsCollapsed="{Binding IsCollapsed}"
+                                                        CollapsedChanged="CollapsedButton_OnCollapsedChanged"
+                                                        Command="{Binding SwitchCollapseCmd}"
+                                                        Tag="{StaticResource GlobalMenuCollapsedGeometry}"
+                                                        Style="{StaticResource CollapsedButtonStyle}"
+                                                        Background="{StaticResource GlobalMainBackgroundBrush}">
+                    </localControl:GlobalCollapsedButton>
+                </Grid>
+
+                <Border x:Name="ContainerPanel"
+                        SnapsToDevicePixels="True"
+                        CornerRadius="10 10 0 0"
+                        BorderThickness="0"
+                        DockPanel.Dock="Bottom"
+                        BorderBrush="{StaticResource  MainBorderBrush}"
+                        Background="{StaticResource GlobalMainBackgroundBrush}">
+                    <StackPanel x:Name="MainPanel"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+
+                        <localControl:MenuButton x:Name="SelectBtn"
+                                                 IsSelected="True"
+                                                 IsCorner="True"
+                                                 MainIconRadiux="20"
+                                                 CornerPosition="0"
+                                                 MainGeometry="{StaticResource ZKSelectGeometry}"
+                                                 Content="选择"
+                                                 Click="SelectButton_OnClick">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="PenBtn"
+                                                 MainIconRadiux="20"
+                                                 HasSubMenu="True"
+                                                 Click="PenButton_OnClick"
+                                                 MainGeometry="{StaticResource ZKPenGeometry}"
+                                                 Content="粉笔">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="EraserBtn"
+                                                 MainIconRadiux="20"
+                                                 HasSubMenu="True"
+                                                 Click="EraserButton_OnClick"
+                                                 MainGeometry="{StaticResource ZKEraseGeometry}"
+                                                 Content="橡皮">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="WhiteBoardCollapsedBtn"
+                                                 Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                 MainGeometry="{StaticResource ZKCollapseGeometry}"
+                                                 Click="WhiteBoardCollapsedBtn_OnClick"
+                                                 Content="收起">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="WhiteBoardBtn"
+                                                 Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BoolToVisibilityOppositeConverter}}"
+                                                 MainGeometry="{StaticResource ZKWhiteBoardGeometry}"
+                                                 Click="WhiteBoardButton_Click"
+                                                 Content="白板">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="FocusBtn"
+                                                 Click="FocusButton_OnClick"
+                                                 MainGeometry="{StaticResource ZKFocusGeometry}"
+                                                 Content="聚焦">
+                        </localControl:MenuButton>
+
+                        <Grid>
+                            <localControl:MenuButton x:Name="RecordBtn"
+                                                     Click="RecordButton_OnClick"
+                                                     MainGeometry="{StaticResource ZKRecordGeometry}"
+                                                     Content="录课">
+                            </localControl:MenuButton>
+
+                            <Ellipse Width="8"
+                                     Height="8"
+                                     Fill="#E6565B"
+                                     Margin="26 17 0 0"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     Visibility="Collapsed"
+                                     x:Name="FlickEllipse">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Style.Triggers>
+                                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimationUsingKeyFrames RepeatBehavior="Forever"
+                                                                                       Storyboard.TargetProperty="Opacity">
+                                                            <DiscreteDoubleKeyFrame KeyTime="0:0:1"
+                                                                                    Value="0"></DiscreteDoubleKeyFrame>
+                                                            <DiscreteDoubleKeyFrame KeyTime="0:0:2"
+                                                                                    Value="1"></DiscreteDoubleKeyFrame>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                        </Grid>
+
+                        <localControl:MenuButton x:Name="InteractionBtn"
+                                                 Visibility="{Binding IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                 MainGeometry="{StaticResource ZKInteractionGeometry}"
+                                                 Click="InteractionButton_OnClick"
+                                                 Content="互动">
+                        </localControl:MenuButton>
+
+                        <localControl:MenuButton x:Name="StopLessonBtn"
+                                                 Visibility="{Binding Path=IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                 MainGeometry="{StaticResource ZKStopLessonGeometry}"
+                                                 Click="QuitButton_OnClick"
+                                                 Content="下课">
+                        </localControl:MenuButton>
+
+                        <Rectangle x:Name="MenuButtonSplit"
+                                   Fill="{StaticResource SplitFillBrush}"
+                                   Width="1"
+                                   Height="32"
+                                   Margin="0">
+
+                        </Rectangle>
+
+                        <localControl:MenuButton x:Name="MoreMenuButton"
+                                                 Visibility="{Binding Path=IsLessoning, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                 Command="{Binding ExpandSubMenuCmd}"
+                                                 MainGeometry="{StaticResource ZKMoreGeometry}"
+                                                 IsCorner="True"
+                                                 MainIconRadiux="24"
+                                                 CornerPosition="1"
+                                                 Content="更多">
+
+                        </localControl:MenuButton>
+
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+
+        </Grid>
+    </Grid>
+</Window>

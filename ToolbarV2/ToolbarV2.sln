@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarV2", "ToolbarV2\ToolbarV2.csproj", "{E671719E-4857-4FD1-8035-7213FDB600F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfResources", "WpfResources\WpfResources.csproj", "{8FD5EE53-A755-40E0-837D-315B4460CF63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E671719E-4857-4FD1-8035-7213FDB600F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E671719E-4857-4FD1-8035-7213FDB600F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E671719E-4857-4FD1-8035-7213FDB600F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E671719E-4857-4FD1-8035-7213FDB600F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD5EE53-A755-40E0-837D-315B4460CF63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A541956-48D1-4A11-8B67-D584C10E8F24}
+	EndGlobalSection
+EndGlobal
