@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using PainingBoard.Models;
+using RecordLib.CommonTools;
 using ToolbarV2.CommonTools;
 using ToolbarV2.Controls;
 using ToolbarV2.ViewModels;
+using AppUtils = ToolbarV2.CommonTools.AppUtils;
 
 namespace ToolbarV2.Views
 {
@@ -79,6 +82,8 @@ namespace ToolbarV2.Views
             SetWindowPosition();
 
             LoadPaintingBoard();
+
+            SwitchDesktop();
         }
 
         /// <summary>
@@ -88,6 +93,8 @@ namespace ToolbarV2.Views
         {
             CheckPaintBoard();
             ShowPaintingBoard();
+            SetPenWidth();
+            _transparentBoardController.SetPenColor("#ffff2d3c");
         }
 
         #endregion LoadAndDispose
@@ -106,6 +113,25 @@ namespace ToolbarV2.Views
                 // 此种情况只适合 任务栏在底部
                 double left = (clientWidth - actualWidth) / 2;
                 double top = clientHeight - actualHeight;
+                this.Left = left;
+                this.Top = top;
+            }
+        }
+
+        /// <summary>
+        /// 设置窗口位置在主屏的底部
+        /// </summary>
+        private void SetWindowBottom()
+        {
+            double actualWidth = this.ActualWidth;
+            double actualHeight = this.ActualHeight;
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            if (!double.IsNaN(actualWidth) && !double.IsNaN(actualHeight))
+            {
+                // 此种情况只适合 任务栏在底部
+                double left = (screenWidth - actualWidth) / 2;
+                double top = screenHeight - actualHeight;
                 this.Left = left;
                 this.Top = top;
             }
@@ -292,9 +318,40 @@ namespace ToolbarV2.Views
         {
             SetPenWidth();
 
-            ViewModel.IsPenSettingPopOpen = false;
+            //ViewModel.IsPenSettingPopOpen = false;
+        }
+
+        private void UndoBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            _transparentBoardController.Undo();
+            //ViewModel.IsEraserSettingPopOpen = false;
+        }
+
+        private void RedoBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            _transparentBoardController.Redo();
         }
 
         #endregion EventHandlers
+
+        private void WhiteBoardBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.IsWhiteBoardMode = true;
+            _paintingBoardWin.Background = Brushes.White;
+            SwitchPen();
+            SetWindowBottom();
+        }
+
+        private void WhiteBoardCollapsedBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.IsWhiteBoardMode = false;
+            _paintingBoardWin.Background = null;
+            SetWindowPosition();
+        }
+
+        private void RecordBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            RecorderHelper.StartRecord(this);
+        }
     }
 }

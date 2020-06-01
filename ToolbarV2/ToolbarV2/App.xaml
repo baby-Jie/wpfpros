@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ToolbarV2"
              xmlns:converters="clr-namespace:WpfResources.Converters;assembly=WpfResources"
+             Startup="App_OnStartup" Exit="App_OnExit"
+             
              StartupUri="/Views/GlobalToolbar.xaml">
     <Application.Resources>
          <ResourceDictionary>

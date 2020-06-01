@@ -35,14 +35,31 @@ namespace ToolbarV2.CommonTools
         }
 
         /// <summary>
-        /// 16进制表示(#ff0000)转换为Color对象
+        /// 获取文件大小
         /// </summary>
-        /// <param name="hexColor"></param>
+        /// <param name="FileName">文件名或含路径的文件名</param>
         /// <returns></returns>
-        //public static Color ConvertHex2Color(string hexColor)
-        //{
-        //    return ColorTranslator.FromHtml(hexColor);
-        //}
+        public static long GetFileSize(string FileName)
+        {
+            return new System.IO.FileInfo(FileName).Length;
+        }
+
+        /// <summary>
+        /// 获取文件大小
+        /// </summary>
+        /// <param name="FileName">文件名或含路径的文件名</param>
+        /// <returns></returns>
+        public static long GetFileSizeSafe(string FileName)
+        {
+            try
+            {
+                return GetFileSize(FileName);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
 
         #region MVVMLight
 

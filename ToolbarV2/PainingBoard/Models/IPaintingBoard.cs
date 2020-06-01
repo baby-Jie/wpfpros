@@ -29,5 +29,15 @@ namespace PainingBoard.Models
         /// 清除所有
         /// </summary>
         void ClearAll();
+
+        /// <summary>
+        /// 撤销
+        /// </summary>
+        void Undo();
+
+        /// <summary>
+        /// 重做
+        /// </summary>
+        void Redo();
     }
 }

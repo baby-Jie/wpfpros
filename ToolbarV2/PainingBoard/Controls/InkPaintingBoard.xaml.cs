@@ -1,20 +1,17 @@
-﻿using System;
+﻿using PainingBoard.CommonTools;
+using PainingBoard.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PainingBoard.Models;
+using Pen = System.Drawing.Pen;
+using Bitmap = System.Drawing.Bitmap;
+using Graphics = System.Drawing.Graphics;
+using RectangleF = System.Drawing.RectangleF;
+using FormColor = System.Drawing.Color;
 
 namespace PainingBoard.Controls
 {
@@ -38,6 +35,13 @@ namespace PainingBoard.Controls
 
         private DrawingAttributes _drawingAttributes;
 
+        private readonly object _strokeLock = new object();
+
+        private bool _isStrokeHandled = true;
+
+        private Stack<Tuple<StrokeCollection, StrokeCollection>> _undoStack = new Stack<Tuple<StrokeCollection, StrokeCollection>>();
+
+        private Stack<Tuple<StrokeCollection, StrokeCollection>> _redoStack = new Stack<Tuple<StrokeCollection, StrokeCollection>>();
         #endregion Fields
 
         #region Properties
@@ -89,6 +93,8 @@ namespace PainingBoard.Controls
         {
             Color penColor = (Color)ColorConverter.ConvertFromString(colorStr);
             _drawingAttributes.Color = penColor;
+
+            SetPenCursor();
         }
 
         /// <summary>
@@ -109,11 +115,84 @@ namespace PainingBoard.Controls
             this.AdInkCanvas.Strokes.Clear();
         }
 
+        /// <summary>
+        /// 撤销
+        /// </summary>
+        public void Undo()
+        {
+            if (_undoStack.Count > 0)
+            {
+                lock (_strokeLock)
+                {
+                    if (_undoStack.Count > 0)
+                    {
+                        Tuple<StrokeCollection, StrokeCollection> tuple = _undoStack.Pop();
+                        _redoStack.Push(tuple);
+                        _isStrokeHandled = false;
+                        AdInkCanvas.Strokes.Remove(tuple.Item1);
+                        AdInkCanvas.Strokes.Add(tuple.Item2);
+                        _isStrokeHandled = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 重做
+        /// </summary>
+        public void Redo()
+        {
+            if (_redoStack.Count > 0)
+            {
+                lock (_strokeLock)
+                {
+                    if (_redoStack.Count > 0)
+                    {
+                        Tuple<StrokeCollection, StrokeCollection> tuple = _redoStack.Pop();
+                        _undoStack.Push(tuple);
+                        _isStrokeHandled = false;
+                        AdInkCanvas.Strokes.Remove(tuple.Item2);
+                        AdInkCanvas.Strokes.Add(tuple.Item1);
+                        _isStrokeHandled = true;
+                    }
+                }
+            }
+        }
+
+
+        private void SetPenCursor()
+        {
+            //Cursor cursor = new Cursor();
+            // 获取颜色
+            //Color penColor = _drawingAttributes.Color;
+
+            //object obj = this.FindResource("PenGeometry");
+            //if (obj is Geometry penGeometry)
+            //{
+            //    Bitmap bitmap = new Bitmap(32, 32);
+            //    using (Graphics g = Graphics.FromImage(bitmap))
+            //    {
+            //        g.DrawEllipse(new Pen(FormColor.Red), new RectangleF(2, 2, 10, 10));
+            //    }
+
+            //    Cursor cursor = CursorHelper.CreateCursorFromBitmap(bitmap, 255, new System.Drawing.Point());
+            //    //GeometryDrawing aGeometryDrawing = new GeometryDrawing();
+            //    //aGeometryDrawing.Geometry = penGeometry;
+            //    //aGeometryDrawing.Brush = new SolidColorBrush(penColor);
+            //    //DrawingImage drawImage = new DrawingImage(aGeometryDrawing);
+            //    //TestImage.Source = drawImage;
+
+            //    //Cursor penCursor = CursorHelper.CreateCursor(TestImage, 32, 32);
+            //    this.AdInkCanvas.Cursor = cursor;
+
+            //}
+            // 生成一个图片文件(svg)
+            //Cursor cursor = new Cursor();
+
+        }
         #endregion Methods
 
         #region EventHandlers
-
-        #region Windows
 
         #region LoadAndDispose
 
@@ -135,11 +214,20 @@ namespace PainingBoard.Controls
         private void LoadInitialization()
         {
             _drawingAttributes = this.AdInkCanvas.DefaultDrawingAttributes;
+
+            this.AdInkCanvas.Strokes.StrokesChanged += StrokesOnStrokesChanged;
+        }
+
+        private void StrokesOnStrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
+        {
+            if (_isStrokeHandled)
+            {
+                _undoStack.Push(new Tuple<StrokeCollection, StrokeCollection>(e.Added, e.Removed));
+                _redoStack.Clear();
+            }
         }
 
         #endregion LoadAndDispose
-
-        #endregion Windows
 
         #endregion EventHandlers
     }

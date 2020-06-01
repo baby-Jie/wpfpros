@@ -115,7 +115,7 @@ namespace ToolbarV2.ViewModels
                     SetGlobalPenColor(value.PenColorString);
                 }
 
-                IsPenSettingPopOpen = false;
+                //IsPenSettingPopOpen = false;
 
                 Set(ref _selectedPenColorModel, value);
             }
@@ -234,7 +234,7 @@ namespace ToolbarV2.ViewModels
             _penColorModelList.Add(new PenColorModel() { PenColorString = "#ffffffff", DscribeText = "白色" });
             _penColorModelList.Add(new PenColorModel() { PenColorString = "#ff000000", DscribeText = "黑色" });
 
-            _selectedPenColorModel = _penColorModelList[5];
+            _selectedPenColorModel = _penColorModelList[0];
         }
 
         #endregion Methods

@@ -1,0 +1,297 @@
+﻿<Window x:Class="RecordLib.Views.RecordSaveWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RecordLib.Views"
+        xmlns:converters="clr-namespace:RecordLib.Converters"
+        mc:Ignorable="d"
+        Height="194"
+        Width="360"
+        WindowStyle="None"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Title="RecordSaveWin">
+    <Window.Resources>
+        <converters:IsStringNullOrSpaceConverter x:Key="IsStringNullOrSpaceConverter"></converters:IsStringNullOrSpaceConverter>
+
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2"
+                                   SnapsToDevicePixels="true"
+                                   Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                                   StrokeThickness="1"
+                                   StrokeDashArray="1 2" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background"
+                         Color="#FFDDDDDD" />
+        <SolidColorBrush x:Key="Button.Static.Border"
+                         Color="#FF707070" />
+        <SolidColorBrush x:Key="Button.MouseOver.Background"
+                         Color="#FFBEE6FD" />
+        <SolidColorBrush x:Key="Button.MouseOver.Border"
+                         Color="#FF3C7FB1" />
+        <SolidColorBrush x:Key="Button.Pressed.Background"
+                         Color="#FFC4E5F6" />
+        <SolidColorBrush x:Key="Button.Pressed.Border"
+                         Color="#FF2C628B" />
+        <SolidColorBrush x:Key="Button.Disabled.Background"
+                         Color="#FFF4F4F4" />
+        <SolidColorBrush x:Key="Button.Disabled.Border"
+                         Color="#FFADB2B5" />
+        <SolidColorBrush x:Key="Button.Disabled.Foreground"
+                         Color="#FF838383" />
+        <Style x:Key="ButtonStyle1"
+               TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle"
+                    Value="{StaticResource FocusVisual}" />
+            <Setter Property="Background"
+                    Value="{StaticResource Button.Static.Background}" />
+            <Setter Property="BorderBrush"
+                    Value="{StaticResource Button.Static.Border}" />
+            <Setter Property="Foreground"
+                    Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+            <Setter Property="Padding"
+                    Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="true"
+                                CornerRadius="15">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Focusable="False"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted"
+                                     Value="true">
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver"
+                                     Value="true">
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource Button.MouseOver.Background}" />
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{StaticResource Button.MouseOver.Border}" />
+                                <!--<Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05" />
+                                    </Setter.Value>
+                                </Setter>-->
+                            </Trigger>
+                            <Trigger Property="IsPressed"
+                                     Value="true">
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource Button.Pressed.Background}" />
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{StaticResource Button.Pressed.Border}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{StaticResource Button.Disabled.Background}" />
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{StaticResource Button.Disabled.Border}" />
+                                <Setter Property="TextElement.Foreground"
+                                        TargetName="contentPresenter"
+                                        Value="{StaticResource Button.Disabled.Foreground}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border BorderThickness="1"
+            BorderBrush="Gray">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Background="#3492d7"
+                  MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="提示"
+                           x:Name="RemindLabel"
+                           Foreground="White"
+                           HorizontalAlignment="Left"
+                           FontSize="15">
+                    </Label>
+                </StackPanel>
+
+                <Button x:Name="Close"
+                        ToolTip="关闭"
+                        Background="Red"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Height="26"
+                        Width="26"
+                        WindowChrome.IsHitTestVisibleInChrome="True"
+                        Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}"
+                        ContentTemplate="{StaticResource CloseWhite}"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        IsTabStop="False"
+                        Visibility="Collapsed" />
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <StackPanel>
+                    <TextBlock Text="保存微课"
+                               FontSize="18"
+                               x:Name="SaveMicroTxtblk"
+                               HorizontalAlignment="Center"
+                               FontWeight="Black"
+                               Margin="0, 10, 0, 0">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush>
+                                <SolidColorBrush.Color>
+                                    <Color R="153"
+                                           G="153"
+                                           B="153"
+                                           A="255"></Color>
+                                </SolidColorBrush.Color>
+                            </SolidColorBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBox x:Name="SaveFileNameTbox"
+                             Margin="20,10"
+                             Height="26"
+                             FontSize="15"
+                             Text="123"></TextBox>
+
+                    <Grid Margin="0,30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="CancelBtn"
+                                Content="CANCEL"
+                                Click="CancelBtn_OnClick"
+                                Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                Width="90"
+                                Height="30"
+                                Margin="0,0,20,0"
+                                Style="{StaticResource ButtonStyle1}"
+                                Foreground="White">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0"
+                                                     EndPoint="1,1">
+                                    <GradientStopCollection>
+                                        <GradientStop Offset="0">
+                                            <GradientStop.Color>
+                                                <Color A="255"
+                                                       R="30"
+                                                       G="223"
+                                                       B="182"></Color>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+
+                                        <GradientStop Offset="0.5">
+                                            <GradientStop.Color>
+                                                <Color A="255"
+                                                       R="24"
+                                                       G="207"
+                                                       B="198"></Color>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+
+                                        <GradientStop Offset="1">
+                                            <GradientStop.Color>
+                                                <Color A="255"
+                                                       R="17"
+                                                       G="193"
+                                                       B="217"></Color>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+                        <Button x:Name="OkBtn"
+                                Style="{StaticResource ButtonStyle1}"
+                                Content="OK"
+                                Click="OkBtn_OnClick"
+                                IsEnabled="{Binding Path=Text, ElementName=SaveFileNameTbox, Converter={StaticResource IsStringNullOrSpaceConverter}}"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                Margin="20,0,0,0"
+                                Width="90"
+                                Height="30"
+                                Foreground="White">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0"
+                                                     EndPoint="1,1">
+                                    <GradientStopCollection>
+                                        <GradientStop Offset="0">
+                                            <GradientStop.Color>
+                                                <Color A="255"
+                                                       R="163"
+                                                       G="162"
+                                                       B="255"></Color>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+
+                                        <GradientStop Offset="0.5">
+                                            <GradientStop.Color>
+                                                <Color A="255"
+                                                       R="143"
+                                                       G="120"
+                                                       B="255"></Color>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+
+                                        <GradientStop Offset="1">
+                                            <GradientStop.Color>
+                                                <Color A="255"
+                                                       R="110"
+                                                       G="114"
+                                                       B="253"></Color>
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

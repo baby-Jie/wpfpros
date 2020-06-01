@@ -37,6 +37,8 @@ namespace ToolbarV2.CommonTools
 
         public const string MSG_GLOBAL_WORKBENCHEXIT = "MSG_GLOBAL_WORKBENCHEXIT"; // 批注或者白板 退出
 
+        public const string MSG_GLOBAL_UNDO = "MSG_GLOBAL_UNDO"; // 撤销
+
         #endregion Global Toolbar Message	
     }
 }

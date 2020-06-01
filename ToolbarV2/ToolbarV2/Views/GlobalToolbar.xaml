@@ -57,7 +57,6 @@
                         <Grid>
                             <StackPanel Margin="5">
                                 <localControl:GeometryRadioButton x:Name="PenWidthSlimRadioBtn"
-                                                                  IsChecked="True"
                                                                   MainGeometry="{StaticResource GlobalPenSlimWidthGeometry}"
                                                                   Checked="PenWidthRadioBtn_OnChecked">
                                 </localControl:GeometryRadioButton>
@@ -68,6 +67,7 @@
                                 </localControl:GeometryRadioButton>
 
                                 <localControl:GeometryRadioButton x:Name="PenWidthThickRadioBtn"
+                                                                  IsChecked="True"
                                                                   MainGeometry="{StaticResource GlobalPenThickWidthGeometry}"
                                                                   Checked="PenWidthRadioBtn_OnChecked">
                                 </localControl:GeometryRadioButton>
@@ -369,7 +369,19 @@
                                                      IsMirror="False"
                                                      MainRotateAngle="0"
                                                      MainGeometry="{StaticResource ZKCancelGeometry}"
+                                                     Click="UndoBtn_OnClick"
                                                      Content="撤销">
+                            </localControl:MenuButton>
+
+                            <localControl:MenuButton x:Name="RedoBtn"
+                                                     Width="40"
+                                                     Height="40"
+                                                     Margin="0 0 0 0"
+                                                     IsMirror="True"
+                                                     MainRotateAngle="0"
+                                                     MainGeometry="{StaticResource ZKCancelGeometry}"
+                                                     Click="RedoBtn_OnClick"
+                                                     Content="重做">
                             </localControl:MenuButton>
                         </StackPanel>
                     </Grid>
@@ -571,14 +583,16 @@
                         <localControl:MenuButton x:Name="WhiteBoardCollapsedBtn"
                                                  Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                  MainGeometry="{StaticResource ZKCollapseGeometry}"
+                                                 Click="WhiteBoardCollapsedBtn_OnClick"
                                                  Content="收起">
                         </localControl:MenuButton>
 
-                        <!--<localControl:MenuButton x:Name="WhiteBoardBtn"
+                        <localControl:MenuButton x:Name="WhiteBoardBtn"
                                                  Visibility="{Binding IsWhiteBoardMode, Converter={StaticResource BoolToVisibilityOppositeConverter}}"
                                                  MainGeometry="{StaticResource ZKWhiteBoardGeometry}"
+                                                 Click="WhiteBoardBtn_OnClick"
                                                  Content="白板">
-                        </localControl:MenuButton>-->
+                        </localControl:MenuButton>
 
                         <localControl:MenuButton x:Name="FocusBtn"
                                                  MainGeometry="{StaticResource ZKFocusGeometry}"
@@ -588,6 +602,7 @@
                         <Grid>
                             <localControl:MenuButton x:Name="RecordBtn"
                                                      MainGeometry="{StaticResource ZKRecordGeometry}"
+                                                     Click="RecordBtn_OnClick"
                                                      Content="录课">
                             </localControl:MenuButton>
 
